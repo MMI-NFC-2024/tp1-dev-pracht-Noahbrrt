@@ -1,11 +1,45 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import * as Plot from "@observablehq/plot";
+import PlotFigure from "../components/PlotFigure.astro";
+import penguins from "../assets/penguins.json";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+  <main>
+    <h1>Représentation des pingouins</h1>
+
+    <div class="chart-container">
+      <PlotFigure
+        options={{
+          marks: [
+            Plot.dot(penguins, {
+              x: "culmen_length_mm",
+              y: "culmen_depth_mm",
+              stroke: "species",
+              fill: "species",
+              r: 4,
+              title: d =>
+                `${d.species}\nLongueur: ${d.culmen_length_mm} mm\nProfondeur: ${d.culmen_depth_mm} mm`
+            })
+          ],
+          x: {
+            label: "Longueur du bec (mm)",
+            grid: true
+          },
+          y: {
+            label: "Profondeur du bec (mm)",
+            grid: true
+          },
+          color: {
+            legend: true,
+            scheme: "category10"
+          },
+          marginLeft: 60,
+          marginBottom: 50
+        }}
+      />
+    </div>
+  </main>
 </Layout>
