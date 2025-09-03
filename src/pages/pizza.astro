@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import * as Plot from "@observablehq/plot";
+import PlotFigure from "../components/PlotFigure.astro";
+import pizza from "../assets/pizza.json";
+---
+
+<Layout title="Pizza">
+  <main>
+    <h1>Commandes de Pizzas fictive</h1>
+
+    <div class="chart-container">
+      <PlotFigure
+        options={{
+          marks: [
+            Plot.barY(pizza, {
+              x: "day_of_week",    
+              y: "orders",         
+              fill: "category",    
+              title: d => `${d.name}\nCommandes: ${d.orders}\nRevenu: ${d.revenue} €`
+            })
+          ],
+          x: {
+            label: "Jour de la semaine",
+            tickRotate: -30
+          },
+          y: {
+            label: "Nombre de commandes"
+          },
+          color: {
+            legend: true,
+            scheme: "category10"
+          },
+          marginLeft: 70,
+          marginBottom: 60
+        }}
+      />
+    </div>
+  </main>
+</Layout>
