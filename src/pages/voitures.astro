@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+import * as Plot from "@observablehq/plot";
+import PlotFigure from "../components/PlotFigure.astro";
+import cars from "../assets/voitures.json";
+---
+
+<Layout>
+  <div>
+    <h1 class="text-2xl font-bold m-3">
+      Voici une représentation des voitures
+    </h1>
+    <PlotFigure
+      options={{
+        grid: true,
+        color: { legend: true },
+        marks: [
+          Plot.dot(cars, {
+            x: "power (hp)",
+            y: "weight (lb)",
+            fill: "cylinders", 
+            title: (d) => `${d.name}\nPuissance: ${d["power (hp)"]} hp\nPoids: ${d["weight (lb)"]} lb`,
+          }),
+        ],
+      }}
+    />
+  </div>
+</Layout>
